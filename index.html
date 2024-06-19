@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Download URL Viewer</title>
+    <style>
+      @font-face {
+        @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+      }
+
+      :root {
+        font-family: "JetBrains Mono", monospace;
+        --text: #f2fde6;
+        --background: #060d01;
+        --primary: #aef57d;
+        --secondary: #3a0c9b;
+        --accent: #f035c1;
+      }
+
+      body {
+        font-family: "JetBrains Mono", monospace;
+        width: 500px;
+        height: 350px;
+        padding: 10px;
+        color: var(--text);
+        background-color: var(--background);
+        text-align: center;
+      }
+      #urlList {
+        font-family: "JetBrains Mono", monospace;
+        margin-top: 10px;
+        list-style-type: square;
+        padding: 0;
+        text-align: center;
+        font-size: 16px;
+      }
+      li {
+        padding: 5px 0;
+      }
+      button {
+        font-family: "JetBrains Mono", monospace;
+        height: 40px;
+        width: 50%;
+        padding: 5px 10px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: var(--primary);
+        color: #000000;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background-color: var(--primary);
+        box-shadow: 0 0 30px var(--primary);
+      }
+
+      .btn-row {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Shareload - Simplify Downloads</h1>
+    <div class="btn-row">
+      <button id="fetchUrls">Fetch</button>
+      <button id="clearUrls">Clear</button>
+      <button id="sendUrls">Send</button>
+    </div>
+
+    <ul id="urlList"></ul>
+    <script src="popup.js"></script>
+  </body>
+</html>
