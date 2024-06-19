@@ -14,12 +14,13 @@
         --primary: #aef57d;
         --secondary: #3a0c9b;
         --accent: #f035c1;
+        --disable: #f13e84;
       }
 
       body {
         font-family: "JetBrains Mono", monospace;
-        width: 500px;
-        height: 350px;
+        width: 450px;
+        height: 250px;
         padding: 10px;
         color: var(--text);
         background-color: var(--background);
@@ -62,14 +63,18 @@
     </style>
   </head>
   <body>
-    <h1>Shareload - Simplify Downloads</h1>
+    <h1>Shareload</h1>
+    <!-- TODO: Make UI better. -->
     <div class="btn-row">
-      <button id="fetchUrls">Fetch</button>
-      <button id="clearUrls">Clear</button>
-      <button id="sendUrls">Send</button>
+      <button id="clearUrl">Clear</button>
+      <button id="configExtension" style="background-color: var(--disable);">Disable</button>
+      <button id="viewMore">View more info</button>
+      <button id="confirmIP">Set Server IP</button>
     </div>
 
-    <ul id="urlList"></ul>
+    <h3 id="downloadInfoText"></h3>
+    <p style="display: none; white-space: pre-wrap;" id="downloadMoreInfo"></p>
+    <input type="text" name="Server IP" id="serverIP" value="http://127.0.0.1:5000">
     <script src="popup.js"></script>
   </body>
 </html>
