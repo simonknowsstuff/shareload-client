@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Shareload",
+  "version": "1.0.0",
+  "description": "A extension so make file downloads simple",
+  "icons": {
+    "16": "images/rocket-lunch-16.png",
+    "32": "images/rocket-lunch-32.png",
+    "128": "images/rocket-lunch-128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "permissions": ["downloads", "scripting"],
+  "action": {
+    "default_icon": "images/rocket-lunch-128.png",
+    "default_title": "Down",
+    "default_popup": "index.html"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"]
+}
