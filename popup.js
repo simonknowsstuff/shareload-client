@@ -1,7 +1,7 @@
 function updateDownloadInfo() {
   const infoText = document.getElementById('downloadInfoText');
   const moreInfo = document.getElementById('downloadMoreInfo');
-  chrome.storage.local.get(['downloadInfo'], (data) => {
+  chrome.storage.session.get(['downloadInfo'], (data) => {
     const downloadInfo = data.downloadInfo;
     if (downloadInfo) {
       infoText.textContent = downloadInfo.filename + ' is being downloaded!';
@@ -16,7 +16,7 @@ function updateDownloadInfo() {
 
 // This is temporary. May be removed.
 document.getElementById('clearUrl').addEventListener('click', () => {
-  chrome.storage.local.remove('downloadInfo');
+  chrome.storage.session.remove('downloadInfo');
 });
 
 document.getElementById('confirmIP').addEventListener('click', () => {
@@ -39,7 +39,7 @@ document.getElementById('viewMore').addEventListener('click', () => {
 });
 
 // Update the info on the screen regardless of whatever happens.
-chrome.storage.local.onChanged.addListener(() => {
+chrome.storage.session.onChanged.addListener(() => {
   updateDownloadInfo();
 });
 updateDownloadInfo();

@@ -4,7 +4,7 @@ chrome.downloads.onDeterminingFilename.addListener((item) => {
     src: item.finalUrl,
     mime: item.mime
   };
-  chrome.storage.local.set({ downloadInfo }, () => {
+  chrome.storage.session.set({ downloadInfo }, () => {
     console.log('Download info saved: ', downloadInfo);
   });
 
