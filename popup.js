@@ -1,40 +1,55 @@
 function updateDownloadInfo() {
-  const infoText = document.getElementById('downloadInfoText');
-  const moreInfo = document.getElementById('downloadMoreInfo');
-  chrome.storage.session.get(['downloadInfo'], (data) => {
+  const infoText = document.getElementById("downloadInfoText");
+  const moreInfo = document.getElementById("downloadMoreInfo");
+  const errorDiv = document.getElementById("error");
+  chrome.storage.session.get(["downloadInfo"], (data) => {
+    if (chrome.runtime.lastError) {
+      errorDiv.textContent = `Error: ${chrome.runtime.lastError.message}`;
+    }
     const downloadInfo = data.downloadInfo;
     if (downloadInfo) {
-      infoText.textContent = downloadInfo.filename + ' is being downloaded!';
+      infoText.textContent = downloadInfo.filename + " is being downloaded!";
       moreInfo.textContent = `Source: ${downloadInfo.src}
       MIME type: ${downloadInfo.mime}`;
     } else {
-      infoText.textContent = 'No recent downloads detected.';
-      moreInfo.textContent = 'No info yet.';
+      infoText.textContent = "No recent downloads detected.";
+      moreInfo.textContent = "No info yet.";
+    }
+  });
+
+  chrome.storage.local.get(["lastError"], (result) => {
+    if (result.lastError) {
+      errorDiv.textContent = `Error: ${result.lastError.message}`;
+      // Clear the error after displaying it
+      chrome.storage.local.remove("lastError");
+    } else {
+      errorDiv.textContent = "";
     }
   });
 }
 
-// This is temporary. May be removed.
-document.getElementById('clearUrl').addEventListener('click', () => {
-  chrome.storage.session.remove('downloadInfo');
-});
+document.getElementById("confirmIP").addEventListener("click", () => {
+  const ipRegex =
+    /^(http:\/\/)?((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{1,5}$/;
 
-document.getElementById('confirmIP').addEventListener('click', () => {
-  // TODO: Check if server IP is valid, and perhaps add in a regex to filter the IP.
-  // For now, the entered IP should not end with '/'
-  // Default IP is http://127.0.0.1:6002
-  const ipText = document.getElementById('serverIP').value;
+  const ipText = document.getElementById("serverIP").value;
+  if (!ipRegex.test(ipText)) {
+    alert("Invalid IP address");
+    document.getElementById("serverIP").value = "http://127.0.0.1:5000";
+    return;
+  }
+
   chrome.storage.local.set({ ip: ipText }, () => {
-      console.log('Set new ip to: ', ipText);
+    console.log("Set new ip to: ", ipText);
   });
 });
 
-document.getElementById('viewMore').addEventListener('click', () => {
-  const moreInfo = document.getElementById('downloadMoreInfo');
-  if (moreInfo.style.display === 'none') {
-    moreInfo.style.display = 'inline';
+document.getElementById("viewMore").addEventListener("click", () => {
+  const moreInfo = document.getElementById("downloadMoreInfo");
+  if (moreInfo.style.display === "none") {
+    moreInfo.style.display = "inline";
   } else {
-    moreInfo.style.display = 'none';
+    moreInfo.style.display = "none";
   }
 });
 
@@ -43,4 +58,3 @@ chrome.storage.session.onChanged.addListener(() => {
   updateDownloadInfo();
 });
 updateDownloadInfo();
-
